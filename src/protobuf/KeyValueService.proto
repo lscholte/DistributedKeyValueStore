@@ -1,0 +1,53 @@
+syntax = "proto3";
+
+package protobuf;
+
+option java_package = "protobuf.generated";
+option java_outer_classname = "KeyValueServiceMessages";
+
+service KeyValueService
+{
+	rpc Put(PutRequest)			returns (PutResponse);
+	rpc Get(GetRequest)			returns (GetResponse);
+	rpc Delete(DeleteRequest)	returns (DeleteResponse);
+}
+
+enum ErrorStatus
+{
+	NONE					= 0;
+	INVALID_REQUEST_FORMAT	= 1;
+}
+
+message PutRequest
+{
+	optional string key 	= 1;
+	optional string value	= 2;
+}
+
+message PutResponse
+{
+	optional ErrorStatus error_status = 1;
+}
+
+message GetRequest
+{
+	optional string key = 1;
+}
+
+message GetResponse
+{
+	optional ErrorStatus	error_status	= 1;
+	optional string			value			= 2;
+}
+
+
+message DeleteRequest
+{
+	optional string key = 1;
+}
+
+message DeleteResponse
+{
+	optional ErrorStatus	error_status	= 1;
+	optional bool			deleted			= 2;
+}
